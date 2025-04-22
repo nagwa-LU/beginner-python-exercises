@@ -16,7 +16,13 @@ def check_winner(board):
 
 # إنشاء اللوحة المبدئية (قائمة بطول 9)
 board = [" "] * 9  
-current_player = "X"  # يبدأ اللاعب X أولًا
+# اختيار اللاعب الذي يبدأ
+while True:
+    current_player = input("اختر X أو O لتبدأ اللعب: ").upper()
+    if current_player in ["X", "O"]:
+        break
+    else:
+        print("يرجى اختيار X أو O فقط.")
 
 while True:
     # عرض اللوحة
