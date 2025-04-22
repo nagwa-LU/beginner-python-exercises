@@ -10,50 +10,74 @@ def check_winner(board):
     for combo in winning_combinations:
         a, b, c = combo
         if board[a] == board[b] == board[c] and board[a] != " ":
-            return board[a]  # اللاعب الفائز (X أو O)
+            return board[a]
     return None
 
-# إنشاء اللوحة المبدئية (قائمة بطول 9)
-board = [" "] * 9  
+# أخذ أسماء اللاعبين
+player1_name = input("أدخل اسم اللاعب الأول: ")
+player2_name = input("أدخل اسم اللاعب الثاني: ")
+
 # اختيار اللاعب الذي يبدأ
 while True:
-    current_player = input("اختر X أو O لتبدأ اللعب: ").upper()
-    if current_player in ["X", "O"]:
+    player_choice = input(f"{player1_name}, اختر X أو O لتبدأ اللعب: ").upper()
+    if player_choice in ["X", "O"]:
         break
     else:
         print("يرجى اختيار X أو O فقط.")
 
+# تثبيت رموز اللاعبين
+player_symbols = {
+    player1_name: player_choice,
+    player2_name: "O" if player_choice == "X" else "X"
+}
+
+turn = player1_name  # نبدأ دائماً باللاعب الأول
+
+# بداية اللعب
 while True:
-    # عرض اللوحة
-    print(f"\n{' | '.join(board[:3])}\n{'-'*9}\n{' | '.join(board[3:6])}\n{'-'*9}\n{' | '.join(board[6:])}")
+    # إنشاء اللوحة المبدئية
+    board = [" "] * 9
 
-    # أخذ المدخلات من اللاعب
-    try:
-        move = int(input(f"اللاعب {current_player}, اختر موضع (0-8): "))
-        if board[move] != " ":
-            print("المكان مشغول، حاول مرة أخرى.")
-            continue
-    except (ValueError, IndexError):
-        print("إدخال غير صالح، حاول مرة أخرى.")
-        continue
-
-    # تحديث اللوحة بالحركة الجديدة
-    board[move] = current_player
-
-    # فحص إذا كان هناك فائز
-    winner = check_winner(board)
-    if winner:
+    while True:
+        # عرض اللوحة
         print(f"\n{' | '.join(board[:3])}\n{'-'*9}\n{' | '.join(board[3:6])}\n{'-'*9}\n{' | '.join(board[6:])}")
-        print(f"تهانينا! اللاعب {winner} فاز!")
-        break
 
-    # فحص التعادل
-    if " " not in board:
-        print("اللعبة انتهت بالتعادل!")
-        break
+        # أخذ المدخلات من اللاعب الحالي
+        try:
+            move = int(input(f"{turn} ({player_symbols[turn]}), اختر موضع (0-8): "))
+            if board[move] != " ":
+                print("المكان مشغول، حاول مرة أخرى.")
+                continue
+        except (ValueError, IndexError):
+            print("إدخال غير صالح، حاول مرة أخرى.")
+            continue
 
-    # تبديل الدور إلى اللاعب الآخر
-    current_player = "O" if current_player == "X" else "X"
+        # تحديث اللوحة
+        board[move] = player_symbols[turn]
+
+        # فحص الفوز
+        winner = check_winner(board)
+        if winner:
+            print(f"\n{' | '.join(board[:3])}\n{'-'*9}\n{' | '.join(board[3:6])}\n{'-'*9}\n{' | '.join(board[6:])}")
+            winning_player = [player for player, symbol in player_symbols.items() if symbol == winner][0]
+            print(f"تهانينا! {winning_player} ({winner}) فاز!")
+            break
+
+        # فحص التعادل
+        if " " not in board:
+            print("اللعبة انتهت بالتعادل!")
+            break
+
+        # تبديل الدور
+        turn = player2_name if turn == player1_name else player1_name
+
+    # سؤال: هل تريدان اللعب مرة ثانية؟
+    play_again = input("هل تريدان اللعب مرة أخرى؟ (نعم/لا): ").lower()
+    if play_again != "نعم":
+        print("شكرًا للعب! إلى اللقاء!")
+        break
+    else:
+        turn = player1_name  # نبدأ دائماً باللاعب الأول
 
 
 
