@@ -13,4 +13,3 @@ YouTube Channel Creator (Console App) – A mockup app idea simulating channel s
 
 These projects may be simple, but they represent a big step forward. I'm building my confidence, learning problem-solving, and turning ideas into real tools.
 
-I'm excited to continue this journey and share more as I grow!
