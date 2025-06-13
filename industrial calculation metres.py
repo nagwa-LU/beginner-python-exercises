@@ -1,9 +1,9 @@
-#عمل مشروع لمحاسبة الصنايعي بالمتر الواحد
+#عمل تجربة لمحاسبة الصنايعي بالمتر الواحد
 #سنأخذ منه الطول
 str_Length = input("Please type Lenght : \n")
 #العرض
 str_width = input("Please type width : \n")
-#ثمن المتر الواحد
+#تكلفة المتر الواحد
 str_price = input("How much for 1 meter? : \n")
 #سنحفظهم علي هيئة ارقام عشريه
 Length = float(str_Length)
